@@ -1,2 +1,3 @@
+include ':patterns'
 include ':app'
 rootProject.name = "BigFrontEnd-Kotlin"
