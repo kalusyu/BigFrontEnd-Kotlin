@@ -22,6 +22,10 @@ fun main() {
     ))
 
     println("${user.name} + ${user.age}")
+
+    val (name, age) = user
+
+    println("destructor : $name + $age")
 }
 
 val lazyValue: String by lazy {
@@ -31,8 +35,14 @@ val lazyValue: String by lazy {
 
 
 class User(val map: Map<String, Any?>) {
+    operator fun component1() = name
+
+    operator fun component2() = age
+
     val name: String by map
     val age: Int by map
+
+
 }
 
 
