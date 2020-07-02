@@ -1,5 +1,6 @@
 package com.kalusyu.patterns
 
+import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 
 /**
@@ -16,5 +17,19 @@ class ObserverUnitTest {
         val textView = TextView()
         textView.name = "Hello JUnit"
         println(textView.name)
+    }
+
+    @Test
+    fun observerTest() {
+        val listener = PrintTextChange()
+        val textView = TextView().apply {
+            listeners.add(listener)
+        }
+        with(textView){
+            text = "A"
+            text = "B"
+        }
+        assertThat(listener.text == "Text is changed: A -> B")
+
     }
 }

@@ -29,6 +29,9 @@ class TextView {
         }
     }
     var name: String by MyDelegate()
+
+
+
 }
 
 

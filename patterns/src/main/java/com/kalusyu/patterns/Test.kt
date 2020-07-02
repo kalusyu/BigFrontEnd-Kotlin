@@ -1,7 +1,6 @@
 package com.kalusyu.patterns
 
 import java.io.File
-import kotlin.reflect.KProperty
 
 /**
  * desc:
@@ -14,8 +13,26 @@ import kotlin.reflect.KProperty
 fun main() {
     val file = File("/a/b/c.a")
     println(file.name)// print c.a
+    println(lazyValue) // 第一次调用执行lazy体
+    println(lazyValue) // 第二次调用只返回get的值
+
+    val user = User(mapOf(
+        "name" to "Kalusyu",
+        "age" to 20
+    ))
+
+    println("${user.name} + ${user.age}")
+}
+
+val lazyValue: String by lazy {
+    println("computed!")
+    "Hello"
+}
 
 
+class User(val map: Map<String, Any?>) {
+    val name: String by map
+    val age: Int by map
 }
 
 
