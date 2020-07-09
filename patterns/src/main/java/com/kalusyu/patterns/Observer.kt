@@ -4,7 +4,7 @@ import kotlin.properties.Delegates
 import kotlin.reflect.KProperty
 
 /**
- * desc:
+ * desc:定义对象间的一种一对多的依赖关系，当一个对象的状态发生改变时，所有依赖于它的对象都得到通知并被自动更新。
  *
  * @author biaowen.yu
  * @date 2020/7/1 10:30

@@ -3,7 +3,7 @@ package com.kalusyu.patterns
 import java.lang.IllegalArgumentException
 
 /**
- * desc:
+ * desc:提供一个创建一系列相关或相互依赖对象的接口，而无需指定它们具体的类。
  *
  * 抽象工厂和抽象产品，多于一个的产品
  *

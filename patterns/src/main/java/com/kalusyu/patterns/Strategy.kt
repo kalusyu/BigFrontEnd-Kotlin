@@ -1,7 +1,7 @@
 package com.kalusyu.patterns
 
 /**
- * desc:
+ * desc:定义一系列的算法，把它们一个个封装起来，并且使它们可相互替换。本模式使得算法可独立于使用它的客户而变化。
  *
  * @author biaowen.yu
  * @date 2020/7/2 11:36

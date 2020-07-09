@@ -3,7 +3,7 @@ package com.kalusyu.patterns
 import java.io.File
 
 /**
- * desc:
+ * desc:将一个复杂对象的构建与它的表示分离，使得同样的构建过程可以创建不同的表示。
  *
  * @author biaowen.yu
  * @date 2020/7/3 11:49
