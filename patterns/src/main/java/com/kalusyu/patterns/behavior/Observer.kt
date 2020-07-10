@@ -1,4 +1,4 @@
-package com.kalusyu.patterns
+package com.kalusyu.patterns.behavior
 
 import kotlin.properties.Delegates
 import kotlin.reflect.KProperty

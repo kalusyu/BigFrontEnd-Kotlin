@@ -1,5 +1,6 @@
 package com.kalusyu.patterns
 
+import com.kalusyu.patterns.create.dialog
 import org.junit.jupiter.api.Test
 import java.io.File
 

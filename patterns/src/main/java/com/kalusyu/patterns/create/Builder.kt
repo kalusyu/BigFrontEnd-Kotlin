@@ -1,4 +1,4 @@
-package com.kalusyu.patterns
+package com.kalusyu.patterns.create
 
 import java.io.File
 
@@ -66,4 +66,6 @@ class DialogBuilder() {
     }
 }
 
-fun dialog(init: DialogBuilder.() -> Unit): Dialog = DialogBuilder(init).build()
+fun dialog(init: DialogBuilder.() -> Unit): Dialog = DialogBuilder(
+    init
+).build()

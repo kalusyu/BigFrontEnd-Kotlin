@@ -1,4 +1,4 @@
-package com.kalusyu.patterns
+package com.kalusyu.patterns.create
 
 import java.lang.IllegalArgumentException
 

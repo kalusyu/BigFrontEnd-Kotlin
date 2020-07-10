@@ -1,5 +1,7 @@
 package com.kalusyu.patterns
 
+import com.kalusyu.patterns.behavior.PrintTextChange
+import com.kalusyu.patterns.behavior.TextView
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 

@@ -1,5 +1,6 @@
 package com.kalusyu.patterns
 
+import com.kalusyu.patterns.create.Factory
 import org.junit.jupiter.api.Test
 
 /**

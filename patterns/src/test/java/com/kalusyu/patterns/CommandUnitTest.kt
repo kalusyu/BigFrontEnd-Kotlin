@@ -1,5 +1,9 @@
 package com.kalusyu.patterns
 
+import com.kalusyu.patterns.behavior.CommandProcess
+import com.kalusyu.patterns.behavior.CopyCommand
+import com.kalusyu.patterns.behavior.DeleteCommand
+import com.kalusyu.patterns.behavior.Operator
 import org.junit.jupiter.api.Test
 
 /**
