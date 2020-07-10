@@ -48,5 +48,10 @@ typedef enum {
     MPP_ERR_BUFFER_FULL         = MPP_ERR_BASE - 12,
 } MPP_RET;
 
-MPP_RET edde_mpp_main();
+typedef void (*EDDE_DEC_CB_T)(unsigned char* yuv,unsigned int yuvlen,unsigned int width,unsigned int height);
+MPP_RET edde_mpp_init(EDDE_DEC_CB_T cb);
+int edde_decode_frame(unsigned char   *buf,unsigned int buf_size);
+void edde_mpp_uninit();
+
+
 #endif /*__MPP_ERR_H__*/
