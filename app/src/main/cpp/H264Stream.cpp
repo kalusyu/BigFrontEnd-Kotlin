@@ -11,14 +11,40 @@
 #include "JniHelper.h"
 
 
+jclass global_class = NULL;
+jmethodID get_dec_param_android;
+
+JavaVM *jvm = NULL;
 
 void
 get_dec_param(unsigned char *yuv, unsigned int yuvlen, unsigned int width, unsigned int height) {
-    JNIEnv* env = JniHelper::getEnv();
-    jclass clazz = (*env).FindClass("com/kalusyu/bigfrontend_kotlin/rtspclient/internal/video/H264Stream");//参数为类路径
-    jmethodID mid = (*env).GetMethodID(clazz,"get_dec_param","()V");
-//    jobject obj = (*env).NewObject(clazz,mid);
+    __android_log_print(ANDROID_LOG_INFO, "nativeH264", "get_dec_param callback");
+    JNIEnv *env = NULL;
+
+    int status;
+    bool isAttached = false;
+    status = jvm->GetEnv((void **) &env, JNI_VERSION_1_4);
+    if (status < 0) {
+        if (jvm->AttachCurrentThread(&env, NULL))////将当前线程注册到虚拟机中
+        {
+            return;
+        }
+        isAttached = true;
+    }
+    //实例化该类
+    jobject obj = env->AllocObject(global_class);//分配新 Java 对象而不调用该对象的任何构造函数。返回该对象的引用
+    //调用Java方法
+    jbyteArray byteArray = env->NewByteArray(yuvlen);
+    env->SetByteArrayRegion(byteArray, 0, yuvlen, (jbyte *) yuv);
+    (env)->CallVoidMethod(obj, get_dec_param_android, byteArray, (jint) yuvlen, (jint) width,
+                          (jint) height);
+
+    if (isAttached) {
+        jvm->DetachCurrentThread();
+    }
+
 }
+
 
 class NativeStream {
 
@@ -60,6 +86,7 @@ static const JNINativeMethod gMethods[] = {
 JNIEXPORT jint JNI_OnLoad(JavaVM *vm, void *reserved) {
 
     __android_log_print(ANDROID_LOG_INFO, "native", "Jni_OnLoad");
+    jvm = vm;
     JNIEnv *env = NULL;
     if (vm->GetEnv((void **) &env, JNI_VERSION_1_4) != JNI_OK) //从JavaVM获取JNIEnv，一般使用1.4的版本
         return -1;
@@ -74,8 +101,22 @@ JNIEXPORT jint JNI_OnLoad(JavaVM *vm, void *reserved) {
         __android_log_print(ANDROID_LOG_INFO, "native", "register native method failed!\n");
         return -1;
     }
+
+    global_class = (jclass) env->NewGlobalRef(clazz);
+    get_dec_param_android = (env)->GetMethodID(global_class, "get_dec_param", "([BIII)V");
+
     return JNI_VERSION_1_4;
 }
+
+JNIEXPORT void JNICALL JNI_OnUnload(JavaVM *vm, void *reserved) {
+    JNIEnv *env = NULL;
+    if (vm->GetEnv((void **) &env, JNI_VERSION_1_4) != JNI_OK) {
+        return;
+    }
+    env->DeleteGlobalRef(global_class);
+    return;
+}
+
 
 
 

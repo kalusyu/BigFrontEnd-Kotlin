@@ -264,7 +264,9 @@ public class H264Stream extends VideoStream {
 
     public static native void setH624Stream(byte[] bytes);
 
-    private void get_dec_param(){
+    private void get_dec_param(byte[] bytes, int yuvlen, int width, int height){
+        Log.d("Java", "get_dec_param java callback" );
+
 
     }
 }
