@@ -11,12 +11,21 @@ cmake_minimum_required(VERSION 3.4.1)
 # Gradle automatically packages shared libraries with your APK.
 
 message("ybw ${CMAKE_SOURCE_DIR}")
+
+# c++引用 so
 add_library(
         libmpp
         SHARED
         IMPORTED)
 set_target_properties(libmpp PROPERTIES IMPORTED_LOCATION
         ${CMAKE_SOURCE_DIR}/../../../libs/${CMAKE_ANDROID_ARCH_ABI}/libmpp.so)
+
+#add_library(
+#        libshowYUV
+#        SHARED
+#        IMPORTED)
+#set_target_properties(libshowYUV PROPERTIES IMPORTED_LOCATION
+#        ${CMAKE_SOURCE_DIR}/../../../libs/${CMAKE_ANDROID_ARCH_ABI}/libshowYUV.so)
 
 
 add_library( # Sets the name of the library.
@@ -26,7 +35,7 @@ add_library( # Sets the name of the library.
         SHARED
 
         # Provides a relative path to your source file(s).
-        native-lib.cpp H264Stream.cpp showYuv.cpp)
+        native-lib.cpp H264Stream.cpp)
 # Searches for a specified prebuilt library and stores the path as a
 # variable. Because CMake includes system libraries in the search path by
 # default, you only need to specify the name of the public NDK library

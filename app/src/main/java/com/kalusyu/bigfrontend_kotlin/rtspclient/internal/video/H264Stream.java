@@ -8,9 +8,12 @@ import android.os.Handler;
 import android.os.HandlerThread;
 import android.util.Base64;
 import android.util.Log;
+import android.view.Surface;
+import android.view.SurfaceHolder;
 import android.view.SurfaceView;
 import android.view.ViewStub;
 
+import com.kalusyu.bigfrontend_kotlin.opengl.MyGLSurfaceView;
 import com.kalusyu.bigfrontend_kotlin.rtspclient.RtspClient;
 
 import java.io.IOException;
@@ -260,13 +263,42 @@ public class H264Stream extends VideoStream {
         }
     }
 
-    public static native Long nativeInit();
+    private native long nativeInit();
 
-    public static native void setH624Stream(byte[] bytes);
+    private native void setH624Stream(byte[] bytes);
 
-    private void get_dec_param(byte[] bytes, int yuvlen, int width, int height){
-        Log.d("Java", "get_dec_param java callback" );
+    private void get_dec_param(final byte[] bytes, int yuvlen, final int width, final int height) {
+        Log.d("Java", "get_dec_param java callback");
+//        SurfaceHolder surfaceHolder = mSurfaceView.getHolder();
+//        surfaceHolder.addCallback(new SurfaceHolder.Callback() {
+//            @Override
+//            public void surfaceCreated(SurfaceHolder holder) {
+//                nativeSetVideoSurface(holder.getSurface());
+//                nativeShowYUV(bytes, width, height);
+//            }
+//
+//            @Override
+//            public void surfaceChanged(SurfaceHolder holder, int format, int width, int height) {
+//
+//            }
+//
+//            @Override
+//            public void surfaceDestroyed(SurfaceHolder holder) {
+//
+//            }
+//        });
+        openGlSurface.setYuvDataSize(width,height);
+        openGlSurface.feedData(bytes, 2);
 
+    }
 
+//    private native boolean nativeSetVideoSurface(Surface surface);
+//
+//    private native void nativeShowYUV(byte[] yuvArray, int width, int height);
+//    private native void nativeTest();
+
+    MyGLSurfaceView openGlSurface;
+    public void setGlSurfaceView(MyGLSurfaceView mGLSurfaceView) {
+        openGlSurface = mGLSurfaceView;
     }
 }

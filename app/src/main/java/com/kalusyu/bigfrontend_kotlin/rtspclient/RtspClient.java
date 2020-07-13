@@ -6,8 +6,11 @@ import android.util.Base64;
 import android.util.Log;
 import android.view.SurfaceView;
 
+import com.kalusyu.bigfrontend_kotlin.opengl.MyGLSurfaceView;
 import com.kalusyu.bigfrontend_kotlin.rtspclient.internal.socket.RtpSocket;
 import com.kalusyu.bigfrontend_kotlin.rtspclient.internal.video.H264Stream;
+
+import org.jetbrains.annotations.Nullable;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -35,6 +38,10 @@ public class RtspClient {
     private final static String METHOD_TCP = "tcp";
     private final static int TRACK_VIDEO = 0x01;
     private final static int TRACK_AUDIO = 0x02;
+
+    public void setGlSurfaceView(@Nullable MyGLSurfaceView openGlSurface) {
+        mGLSurfaceView = openGlSurface;
+    }
 
     private class Parameters {
         public String host;
@@ -72,6 +79,7 @@ public class RtspClient {
     private H264Stream mH264Stream;
 
     private SurfaceView mSurfaceView;
+    private MyGLSurfaceView mGLSurfaceView;
 
     public RtspClient(String address, String name, String password) {
         this("udp", address, name, password);
@@ -297,6 +305,7 @@ public class RtspClient {
             //prepare for the video decoder
             mH264Stream = new H264Stream(sdpInfo);
             mH264Stream.setSurfaceView(mSurfaceView);
+            mH264Stream.setGlSurfaceView(mGLSurfaceView);
 
             if (isTCPtranslate)
                 mRtpSocket = new RtpSocket(isTCPtranslate, mParams.rtpPort, mParams.host, -1, TRACK_VIDEO);
@@ -312,6 +321,7 @@ public class RtspClient {
                 //prepare for the video decoder
                 mH264Stream = new H264Stream(sdpInfo);
                 mH264Stream.setSurfaceView(mSurfaceView);
+                mH264Stream.setGlSurfaceView(mGLSurfaceView);
 
                 mRtpSocket = new RtpSocket(isTCPtranslate, mParams.rtpPort, mParams.host, -2, TRACK_VIDEO);
                 mRtpSocket.setRtspSocket(mSocket);

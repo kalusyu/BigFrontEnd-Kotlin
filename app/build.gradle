@@ -41,12 +41,18 @@ android {
         }
     }
 
-//    sourceSets {
-//        main {
-//            jniLibs.srcDirs = ['libs']
-//        }
-//
-//    }
+    // java 引用so
+    sourceSets {
+        main {
+            jniLibs.srcDirs = ['libs']
+        }
+
+    }
+
+    // Fix: More than one file was found
+    packagingOptions {
+        pickFirst 'lib/arm64-v8a/libmpp.so'
+    }
 }
 
 dependencies {

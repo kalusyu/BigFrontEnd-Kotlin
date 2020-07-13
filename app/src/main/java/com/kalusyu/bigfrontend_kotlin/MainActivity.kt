@@ -7,6 +7,7 @@ import android.widget.VideoView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import com.kalusyu.bigfrontend_kotlin.rtspclient.RtspClient
+import kotlinx.android.synthetic.main.activity_main.*
 
 class MainActivity : AppCompatActivity() {
 
@@ -35,7 +36,7 @@ class MainActivity : AppCompatActivity() {
         val button = findViewById<Button>(R.id.button)
 
         button.setOnClickListener {
-            val addr = "rtsp://192.168.1.152:554"
+            val addr = "rtsp://192.168.1.152:554/"
 //            val addr = "rtsp://wowzaec2demo.streamlock.net/vod/mp4:BigBuckBunny_115k.mov"
 //            val player = MediaPlayer()
 //            player.setDataSource(addr)
@@ -59,6 +60,7 @@ class MainActivity : AppCompatActivity() {
 
         val client = RtspClient(addr)
         client.setSurfaceView(surfaceView)
+        client.setGlSurfaceView(openGlSurface)
         client.start()
 
     }
@@ -67,11 +69,12 @@ class MainActivity : AppCompatActivity() {
      * A native method that is implemented by the 'native-lib' native library,
      * which is packaged with this application.
      */
-    external fun stringFromJNI(): String
+//    external fun stringFromJNI(): String
 
     companion object {
         // Used to load the 'native-lib' library on application startup.
         init {
+//            System.loadLibrary("showYUV")
             System.loadLibrary("native-lib")
         }
     }
