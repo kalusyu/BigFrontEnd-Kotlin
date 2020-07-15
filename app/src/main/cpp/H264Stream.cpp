@@ -18,7 +18,7 @@ JavaVM *jvm = NULL;
 
 void
 get_dec_param(unsigned char *yuv, unsigned int yuvlen, unsigned int width, unsigned int height) {
-    __android_log_print(ANDROID_LOG_INFO, "nativeH264", "get_dec_param callback");
+    __android_log_print(ANDROID_LOG_INFO, "ybw", "nativeH264 get_dec_param callback");
     JNIEnv *env = NULL;
 
     int status;
@@ -57,18 +57,40 @@ protected:
 
 NativeStream::NativeStream() {
     int result = edde_mpp_init(get_dec_param);
-    __android_log_print(ANDROID_LOG_INFO, "native",
-                        "result = %d", result);
+    __android_log_print(ANDROID_LOG_INFO, "ybw",
+                        "native result = %d", result);
+//    unsigned char sps[]={0x00,0x00,0x00,0x01,0x67,0x64,0x00,0x1F,0xAC,0x1A,0xD0,0x14,0x07,0xB4,0x20,0x00,0x00,0x03,0x00,0x20,0x00,0x00,0x05,0x11,0xE2,0x85,0x54};
+//    unsigned char pps[]={0x00,0x00,0x00,0x01,0x68,0xEE,0x3C,0xB0};
+
+    unsigned char sps[]={0x00,0x00,0x00,0x01,0x67,0x4D,0x40,0x1F,0xEC,0xA0,0x7E,0x09,0x3C,0xB1,0x18,0x08,0x80,0x00,0x00,0x03,0x00,0x80,0x00,0x00,0x18,0x07,0x8C,0x18,0xCB};
+    unsigned char pps[]={0x00,0x00,0x00,0x01,0x68,0xEB,0xEF,0x20};
+
+
+
+    __android_log_print(ANDROID_LOG_INFO, "ybw",
+                        "native result = %d，sps=%d", result, sizeof(sps));
+    edde_decode_frame(sps, sizeof(sps));
+    edde_decode_frame(pps, sizeof(pps));
 }
 
 NativeStream::~NativeStream() {
 
 }
 
-static jstring setH624Stream(JNIEnv *env, jobject thiz) {
+static void setH624Stream(JNIEnv *env, jobject thiz, jbyteArray byte) {
+    int length = (*env).GetArrayLength(byte);
+    __android_log_print(ANDROID_LOG_INFO, "ybw",
+                        "setH624Stream bytebuf = %d", length);
 
-    unsigned char *buf;
-    edde_decode_frame(buf, sizeof(buf));
+    jboolean isCopy = JNI_TRUE;
+    jbyte *bBuffer = env->GetByteArrayElements(byte, &isCopy);
+    unsigned char *buff = (unsigned char *) bBuffer;
+
+    __android_log_print(ANDROID_LOG_INFO, "ybw",
+                        "setH624Stream convert %d,%d,%d,%d", bBuffer[0], bBuffer[1], bBuffer[2],
+                        bBuffer[3]);
+    edde_decode_frame(buff, length);
+
 }
 
 static jlong nativeInit(JNIEnv *env, jclass clazz) {

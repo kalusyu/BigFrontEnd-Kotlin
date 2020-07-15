@@ -1,16 +1,17 @@
 package com.kalusyu.bigfrontend_kotlin
 
 import android.os.Bundle
+import android.util.Log
 import android.view.SurfaceView
 import android.widget.Button
 import android.widget.VideoView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
-import com.kalusyu.bigfrontend_kotlin.rtspclient.RtspClient
+import com.kalusyu.bigfrontend_kotlin.opengl.MyGLSurfaceView
+import com.kalusyu.bigfrontend_kotlin.rtspclient.internal.video.H264Stream
 import kotlinx.android.synthetic.main.activity_main.*
 
 class MainActivity : AppCompatActivity() {
-
 
     private var surfaceView: SurfaceView? = null
     private var videoView: VideoView? = null
@@ -58,10 +59,25 @@ class MainActivity : AppCompatActivity() {
 
     private fun playRtsp(addr: String) {
 
-        val client = RtspClient(addr)
-        client.setSurfaceView(surfaceView)
-        client.setGlSurfaceView(openGlSurface)
-        client.start()
+//        val client = RtspClient(addr)
+//        client.setSurfaceView(surfaceView)
+//        client.setGlSurfaceView(openGlSurface)
+//        client.start()
+        val h264Stream = H264Stream.getTest()
+        h264Stream.nativeInit()
+        h264Stream.setGlSurfaceView(openGlSurface)
+        h264Stream.initYuvFile()
+        staticopenGlSurface = openGlSurface
+
+        val inputStream = assets.open("test.h264")
+        val byteArray = ByteArray(8 * 1024)
+        var count = 0
+        while (inputStream.read(byteArray, 0, byteArray.size) != -1) {
+            Log.i("ybw", "read ${++count}")
+            h264Stream.setH624Stream(byteArray)
+        }
+        Log.i("ybw", "read finish")
+
 
     }
 
@@ -77,5 +93,8 @@ class MainActivity : AppCompatActivity() {
 //            System.loadLibrary("showYUV")
             System.loadLibrary("native-lib")
         }
+
+        @JvmStatic
+        var staticopenGlSurface: MyGLSurfaceView? = null
     }
 }

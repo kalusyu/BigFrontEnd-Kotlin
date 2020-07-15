@@ -8,15 +8,16 @@ import android.os.Handler;
 import android.os.HandlerThread;
 import android.util.Base64;
 import android.util.Log;
-import android.view.Surface;
-import android.view.SurfaceHolder;
 import android.view.SurfaceView;
 import android.view.ViewStub;
 
+import com.kalusyu.bigfrontend_kotlin.MainActivity;
 import com.kalusyu.bigfrontend_kotlin.opengl.MyGLSurfaceView;
 import com.kalusyu.bigfrontend_kotlin.rtspclient.RtspClient;
 
+import java.io.File;
 import java.io.IOException;
+import java.io.RandomAccessFile;
 import java.nio.ByteBuffer;
 import java.util.concurrent.LinkedBlockingDeque;
 
@@ -37,6 +38,11 @@ public class H264Stream extends VideoStream {
     private HandlerThread thread;
 
     @TargetApi(Build.VERSION_CODES.JELLY_BEAN)
+    public  static H264Stream getTest(){
+        return new H264Stream();
+    }
+
+    private H264Stream(){}
 
     public H264Stream(RtspClient.SDPInfo sp) {
         mSDPinfo = sp;
@@ -85,11 +91,19 @@ public class H264Stream extends VideoStream {
             int framType;
             boolean startKeyFrame = false;
 
-            configMediaDecoder();
-            while (!Thread.interrupted() && !isStop) {
+//            configMediaDecoder();
+            initFile();
+//            saveSpsPps();
+            int i = 0;
+            while (!Thread.interrupted() && !isStop && i < 10) {
                 try {
                     tmpByte = bufferQueue.take();
-                    setH624Stream(tmpByte);
+                    saveByte(tmpByte);
+                    ++i;
+//                    Log.i("ybw", "tmpByte =" + tmpByte);
+//                    saveByte(tmpByte);
+//                    setH624Stream(tmpByte);
+
                     /*framType = tmpByte[4] & 0x1F;
                     if (framType == 5) startKeyFrame = true;
                     if (startKeyFrame || framType == 7 || framType == 8) {
@@ -119,9 +133,9 @@ public class H264Stream extends VideoStream {
                 }
             }
             bufferQueue.clear();
-            mMeidaCodec.stop();
-            mMeidaCodec.release();
-            mMeidaCodec = null;
+//            mMeidaCodec.stop();
+//            mMeidaCodec.release();
+//            mMeidaCodec = null;
         }
     };
 
@@ -263,31 +277,16 @@ public class H264Stream extends VideoStream {
         }
     }
 
-    private native long nativeInit();
+    public native long nativeInit();
 
-    private native void setH624Stream(byte[] bytes);
+    public native void setH624Stream(byte[] bytes);
 
     private void get_dec_param(final byte[] bytes, int yuvlen, final int width, final int height) {
         Log.d("Java", "get_dec_param java callback");
-//        SurfaceHolder surfaceHolder = mSurfaceView.getHolder();
-//        surfaceHolder.addCallback(new SurfaceHolder.Callback() {
-//            @Override
-//            public void surfaceCreated(SurfaceHolder holder) {
-//                nativeSetVideoSurface(holder.getSurface());
-//                nativeShowYUV(bytes, width, height);
-//            }
-//
-//            @Override
-//            public void surfaceChanged(SurfaceHolder holder, int format, int width, int height) {
-//
-//            }
-//
-//            @Override
-//            public void surfaceDestroyed(SurfaceHolder holder) {
-//
-//            }
-//        });
-        openGlSurface.setYuvDataSize(width,height);
+        initYuvFile();
+        saveYuv(bytes);
+        openGlSurface = MainActivity.getStaticopenGlSurface();
+        openGlSurface.setYuvDataSize(width, height);
         openGlSurface.feedData(bytes, 2);
 
     }
@@ -298,7 +297,70 @@ public class H264Stream extends VideoStream {
 //    private native void nativeTest();
 
     MyGLSurfaceView openGlSurface;
+
     public void setGlSurfaceView(MyGLSurfaceView mGLSurfaceView) {
         openGlSurface = mGLSurfaceView;
+    }
+
+
+    private RandomAccessFile file_test;
+
+    public void initFile() {
+        //创建文件，将byte数据直接进行保存
+        try {
+            File file = new File("/sdcard/data.h264");  //后缀自己定义
+            if (file.exists()) {
+                file.delete();
+            }
+            file_test = new RandomAccessFile(file, "rw");   //可读写
+        } catch (Exception ex) {
+            Log.v("System.out", ex.toString());
+        }
+    }
+
+    public void saveSpsPps() {
+        char[] sps = {0x00, 0x00, 0x00, 0x01, 0x67, 0x64, 0x00, 0x1F, 0xAC, 0x1A, 0xD0, 0x14, 0x07, 0xB4, 0x20, 0x00, 0x00, 0x03, 0x00, 0x20, 0x00, 0x00, 0x05, 0x11, 0xE2, 0x85, 0x54};
+        char[] pps = {0x00, 0x00, 0x00, 0x01, 0x68, 0xEE, 0x3C, 0xB0};
+        try {
+            for (int i = 0; i < sps.length; i++) {
+                file_test.write(sps[i]);
+            }
+            for (int i = 0; i < pps.length; i++) {
+                file_test.write(pps[i]);
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void saveByte(byte[] bytesdata) {
+        try {
+            file_test.write(bytesdata);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    private RandomAccessFile yuvFile;
+
+    public void initYuvFile() {
+        //创建文件，将byte数据直接进行保存
+        try {
+            File file = new File("/sdcard/data.yuv");  //后缀自己定义
+//            if (file.exists()) {
+//                file.delete();
+//            }
+            yuvFile = new RandomAccessFile(file, "rw");   //可读写
+        } catch (Exception ex) {
+            Log.v("System.out", ex.toString());
+        }
+    }
+
+    public void saveYuv(byte[] bytes) {
+        try {
+            yuvFile.write(bytes);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 }
