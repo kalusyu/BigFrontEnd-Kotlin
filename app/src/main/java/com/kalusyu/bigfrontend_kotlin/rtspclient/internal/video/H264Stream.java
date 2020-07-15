@@ -91,18 +91,17 @@ public class H264Stream extends VideoStream {
             int framType;
             boolean startKeyFrame = false;
 
-//            configMediaDecoder();
-            initFile();
+            configMediaDecoder();
+//            initFile();
 //            saveSpsPps();
             int i = 0;
             while (!Thread.interrupted() && !isStop && i < 10) {
                 try {
                     tmpByte = bufferQueue.take();
-                    saveByte(tmpByte);
-                    ++i;
-//                    Log.i("ybw", "tmpByte =" + tmpByte);
 //                    saveByte(tmpByte);
-//                    setH624Stream(tmpByte);
+//                    ++i;
+//                    Log.i("ybw", "tmpByte =" + tmpByte);
+                    setH624Stream(tmpByte);
 
                     /*framType = tmpByte[4] & 0x1F;
                     if (framType == 5) startKeyFrame = true;

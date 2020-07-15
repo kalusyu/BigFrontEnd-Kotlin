@@ -8,6 +8,7 @@ import android.widget.VideoView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import com.kalusyu.bigfrontend_kotlin.opengl.MyGLSurfaceView
+import com.kalusyu.bigfrontend_kotlin.rtspclient.RtspClient
 import com.kalusyu.bigfrontend_kotlin.rtspclient.internal.video.H264Stream
 import kotlinx.android.synthetic.main.activity_main.*
 
@@ -69,8 +70,8 @@ class MainActivity : AppCompatActivity() {
         h264Stream.initYuvFile()
         staticopenGlSurface = openGlSurface
 
-        val inputStream = assets.open("test.h264")
-        val byteArray = ByteArray(8 * 1024)
+        val inputStream = assets.open("test2.h264")
+        val byteArray = ByteArray(4 * 1024)
         var count = 0
         while (inputStream.read(byteArray, 0, byteArray.size) != -1) {
             Log.i("ybw", "read ${++count}")

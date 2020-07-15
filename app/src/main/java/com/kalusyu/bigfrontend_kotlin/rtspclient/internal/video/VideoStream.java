@@ -114,6 +114,8 @@ public abstract class VideoStream extends RtpStream {
                 NALUnit[2] = 0x00;
                 NALUnit[3] = 0x01;
                 System.arraycopy(streamPacks.data,0,NALUnit,4,streamPacks.data.length);
+//                NALUnit = new byte[streamPacks.data.length];
+//                System.arraycopy(streamPacks.data,0,NALUnit,0,streamPacks.data.length);
                 NALEndFlag = true;
                 break;
         }
