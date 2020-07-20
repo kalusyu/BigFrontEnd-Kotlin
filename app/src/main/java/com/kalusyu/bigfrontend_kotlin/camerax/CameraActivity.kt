@@ -1,8 +1,10 @@
 package com.kalusyu.bigfrontend_kotlin.camerax
 
 import android.os.Bundle
+import android.util.Size
 import androidx.appcompat.app.AppCompatActivity
 import androidx.camera.core.CameraSelector
+import androidx.camera.core.ImageAnalysis
 import androidx.camera.core.Preview
 import androidx.camera.lifecycle.ProcessCameraProvider
 import androidx.core.content.ContextCompat
@@ -44,6 +46,16 @@ class CameraActivity:AppCompatActivity() {
 
         preview.setSurfaceProvider(previewView.createSurfaceProvider())
 
+        val imageAnalysis = ImageAnalysis.Builder()
+            .setTargetResolution(Size(1280, 720))
+            .setBackpressureStrategy(ImageAnalysis.STRATEGY_KEEP_ONLY_LATEST)
+            .build()
+
+//        imageAnalysis.setAnalyzer(executor, ImageAnalysis.Analyzer { image ->
+//            val rotationDegrees = image.imageInfo.rotationDegrees
+//            // insert your code here.
+//        })
     }
+
 
 }
