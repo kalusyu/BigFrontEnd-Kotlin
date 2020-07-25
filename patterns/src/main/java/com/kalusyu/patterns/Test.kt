@@ -45,6 +45,13 @@ class User(val map: Map<String, Any?>) {
 
 }
 
+object DataObject{
+
+    fun testData(){
+        println("testData")
+    }
+}
+
 
 
 
