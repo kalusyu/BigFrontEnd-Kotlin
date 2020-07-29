@@ -93,7 +93,7 @@ fun main() {
         )
     )
 
-    acceptor.filterChain.addAfter("logger", "myFilter", IoFilterImpl())
+//    acceptor.filterChain.addAfter("logger", "myFilter", IoFilterImpl())
 
     //设置处理类  IoHandler
     acceptor.handler = TimeServerHandler()

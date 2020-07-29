@@ -13,7 +13,7 @@ class TimeClientHandler : IoHandlerAdapter() {
         val bbuf = message as IoBuffer
         val byten = ByteArray(bbuf.limit())
         bbuf[byten, bbuf.position(), bbuf.limit()]
-        println("客户端收到消息" + ByteUtilities.asHex(byten))
+        println("客户端收到消息" + /*ByteUtilities.asHex(byten)*/byten)
     }
 
     @Throws(Exception::class)
