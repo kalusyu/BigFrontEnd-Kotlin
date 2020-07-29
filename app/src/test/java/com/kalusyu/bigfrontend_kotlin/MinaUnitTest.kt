@@ -20,8 +20,7 @@ class MinaUnitTest {
         var session: IoSession
         val clientHandler = TimeClientHandler()
         connector = NioSocketConnector()
-//设置处理类
-//设置处理类
+        //设置处理类
         connector.setHandler(clientHandler)
         val connFuture: ConnectFuture = connector.connect(InetSocketAddress("localhost", PORT))
         connFuture.awaitUninterruptibly()
@@ -44,8 +43,7 @@ class MinaUnitTest {
             session.write(buffer)
             Thread.sleep(2000)
         }
-// 关闭会话，待所有线程处理结束后
-// 关闭会话，待所有线程处理结束后
+        // 关闭会话，待所有线程处理结束后
         connector.dispose(true)
     }
 

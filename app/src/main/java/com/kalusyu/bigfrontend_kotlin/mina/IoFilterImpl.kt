@@ -1,15 +1,15 @@
 package com.kalusyu.bigfrontend_kotlin.mina
 
 import org.apache.mina.core.filterchain.IoFilter
+import org.apache.mina.core.filterchain.IoFilterAdapter
 import org.apache.mina.core.filterchain.IoFilterChain
 import org.apache.mina.core.session.IdleStatus
 import org.apache.mina.core.session.IoSession
 import org.apache.mina.core.write.WriteRequest
 import org.apache.mina.filter.FilterEvent
 
-class IoFilterImpl:IoFilter {
+class IoFilterImpl:IoFilterAdapter() {
     override fun event(nextFilter: IoFilter.NextFilter?, session: IoSession?, event: FilterEvent?) {
-        TODO("Not yet implemented")
     }
 
     override fun messageReceived(
@@ -17,7 +17,7 @@ class IoFilterImpl:IoFilter {
         session: IoSession?,
         message: Any?
     ) {
-        TODO("Not yet implemented")
+        println("IoFilterImpl messageReceived")
     }
 
     override fun onPreRemove(
@@ -25,7 +25,7 @@ class IoFilterImpl:IoFilter {
         name: String?,
         nextFilter: IoFilter.NextFilter?
     ) {
-        TODO("Not yet implemented")
+        println("IoFilterImpl onPreRemove")
     }
 
     override fun filterWrite(
@@ -33,11 +33,11 @@ class IoFilterImpl:IoFilter {
         session: IoSession?,
         writeRequest: WriteRequest?
     ) {
-        TODO("Not yet implemented")
+        println("IoFilterImpl filterWrite")
     }
 
     override fun destroy() {
-        TODO("Not yet implemented")
+        println("IoFilterImpl destroy")
     }
 
     override fun messageSent(
@@ -45,19 +45,19 @@ class IoFilterImpl:IoFilter {
         session: IoSession?,
         writeRequest: WriteRequest?
     ) {
-        TODO("Not yet implemented")
+        println("IoFilterImpl messageSent")
     }
 
     override fun init() {
-        TODO("Not yet implemented")
+        println("IoFilterImpl init")
     }
 
     override fun filterClose(nextFilter: IoFilter.NextFilter?, session: IoSession?) {
-        TODO("Not yet implemented")
+        println("IoFilterImpl filterClose")
     }
 
     override fun sessionCreated(nextFilter: IoFilter.NextFilter?, session: IoSession?) {
-        TODO("Not yet implemented")
+        println("IoFilterImpl sessionCreated")
     }
 
     override fun sessionIdle(
@@ -65,7 +65,7 @@ class IoFilterImpl:IoFilter {
         session: IoSession?,
         status: IdleStatus?
     ) {
-        TODO("Not yet implemented")
+        println("IoFilterImpl sessionIdle")
     }
 
     override fun onPostAdd(
@@ -73,19 +73,19 @@ class IoFilterImpl:IoFilter {
         name: String?,
         nextFilter: IoFilter.NextFilter?
     ) {
-        TODO("Not yet implemented")
+        println("IoFilterImpl onPostAdd")
     }
 
     override fun onPreAdd(parent: IoFilterChain?, name: String?, nextFilter: IoFilter.NextFilter?) {
-        TODO("Not yet implemented")
+        println("IoFilterImpl onPreAdd")
     }
 
     override fun sessionOpened(nextFilter: IoFilter.NextFilter?, session: IoSession?) {
-        TODO("Not yet implemented")
+        println("IoFilterImpl sessionOpened")
     }
 
     override fun sessionClosed(nextFilter: IoFilter.NextFilter?, session: IoSession?) {
-        TODO("Not yet implemented")
+        println("IoFilterImpl sessionClosed")
     }
 
     override fun onPostRemove(
@@ -93,11 +93,11 @@ class IoFilterImpl:IoFilter {
         name: String?,
         nextFilter: IoFilter.NextFilter?
     ) {
-        TODO("Not yet implemented")
+        println("IoFilterImpl onPostRemove")
     }
 
     override fun inputClosed(nextFilter: IoFilter.NextFilter?, session: IoSession?) {
-        TODO("Not yet implemented")
+        println("IoFilterImpl inputClosed")
     }
 
     override fun exceptionCaught(
@@ -105,6 +105,6 @@ class IoFilterImpl:IoFilter {
         session: IoSession?,
         cause: Throwable?
     ) {
-        TODO("Not yet implemented")
+        println("IoFilterImpl exceptionCaught")
     }
 }

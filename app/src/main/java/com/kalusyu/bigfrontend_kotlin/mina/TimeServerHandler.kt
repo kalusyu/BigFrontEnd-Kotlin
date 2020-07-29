@@ -37,7 +37,7 @@ class TimeServerHandler : IoHandlerAdapter() {
         val strMsg = id.message.toString()
         println("服务端接收到的数据为: $strMsg")
         if (strMsg.trim { it <= ' ' }.equals("quit", ignoreCase = true)) {
-            session!!.close()
+            session!!.closeNow()
             return
         }
         val date = Date()
@@ -71,13 +71,17 @@ class TimeServerHandler : IoHandlerAdapter() {
 }
 
 private const val PORT = 6488
-fun main() {
-//监听即将到来的TCP连接，建立监控器
 
-    //监听即将到来的TCP连接，建立监控器
+/**
+ * 1. create IoService
+ * 2. create IoFilter
+ * 3. create IoHandler
+ */
+fun main() {
+
+    //监听即将到来的TCP连接，建立监控器 IoService
     val acceptor: IoAcceptor = NioSocketAcceptor()
-//设置拦截器
-//设置拦截器
+    //设置拦截器  IoFilter
     acceptor.filterChain.addLast("logger", LoggingFilter())
     acceptor.filterChain.addLast(
         "codec",
@@ -88,17 +92,19 @@ fun main() {
             )
         )
     )
-//设置处理类
-//设置处理类
+
+    acceptor.filterChain.addAfter("logger", "myFilter", IoFilterImpl())
+
+    //设置处理类  IoHandler
     acceptor.handler = TimeServerHandler()
-    //设置配置
+
+
     //设置配置
     acceptor.sessionConfig.readBufferSize = 2048
     acceptor.sessionConfig.setIdleTime(IdleStatus.BOTH_IDLE, 10)
 
-//绑定的监听端口，可多次绑定，也可同时绑定多个。
 
-//绑定的监听端口，可多次绑定，也可同时绑定多个。
+    //绑定的监听端口，可多次绑定，也可同时绑定多个。
     acceptor.bind(InetSocketAddress(PORT))
     println("服务端启动成功......端口号为： $PORT")
 }
