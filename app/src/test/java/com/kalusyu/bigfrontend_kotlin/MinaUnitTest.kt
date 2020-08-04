@@ -47,4 +47,9 @@ class MinaUnitTest {
 //        connector.dispose(true)
     }
 
+
+    @Test
+    fun  testStr(){
+    }
+
 }
