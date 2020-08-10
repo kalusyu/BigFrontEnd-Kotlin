@@ -9,10 +9,17 @@
         android:layout_height="match_parent">
 
         <Button
-            android:id="@+id/btn1"
+        android:id="@+id/btn1"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:text="camera"
+        app:layout_constraintTop_toTopOf="parent" />
+
+        <Button
+            android:id="@+id/btn2"
             android:layout_width="match_parent"
             android:layout_height="50dp"
-            android:text="camera"
+            android:text="YuvTest"
             app:layout_constraintTop_toTopOf="parent" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>

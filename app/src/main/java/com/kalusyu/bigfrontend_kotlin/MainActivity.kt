@@ -60,24 +60,24 @@ class MainActivity : AppCompatActivity() {
 
     private fun playRtsp(addr: String) {
 
-//        val client = RtspClient(addr)
-//        client.setSurfaceView(surfaceView)
-//        client.setGlSurfaceView(openGlSurface)
-//        client.start()
-        val h264Stream = H264Stream.getTest()
-        h264Stream.nativeInit()
-        h264Stream.setGlSurfaceView(openGlSurface)
-        h264Stream.initYuvFile()
-        staticopenGlSurface = openGlSurface
-
-        val inputStream = assets.open("test2.h264")
-        val byteArray = ByteArray(4 * 1024)
-        var count = 0
-        while (inputStream.read(byteArray, 0, byteArray.size) != -1) {
-            Log.i("ybw", "read ${++count}")
-            h264Stream.setH624Stream(byteArray)
-        }
-        Log.i("ybw", "read finish")
+        val client = RtspClient(addr)
+        client.setSurfaceView(surfaceView)
+        client.setGlSurfaceView(openGlSurface)
+        client.start()
+//        val h264Stream = H264Stream.getTest()
+//        h264Stream.nativeInit()
+//        h264Stream.setGlSurfaceView(openGlSurface)
+//        h264Stream.initYuvFile()
+//        staticopenGlSurface = openGlSurface
+//
+//        val inputStream = assets.open("test2.h264")
+//        val byteArray = ByteArray(4 * 1024)
+//        var count = 0
+//        while (inputStream.read(byteArray, 0, byteArray.size) != -1) {
+//            Log.i("ybw", "read ${++count}")
+//            h264Stream.setH624Stream(byteArray)
+//        }
+//        Log.i("ybw", "read finish")
 
 
     }
