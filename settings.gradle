@@ -1,3 +1,4 @@
+include ':appstartup'
 include ':nettypractice'
 include ':hiltpractice'
 include ':patterns'
