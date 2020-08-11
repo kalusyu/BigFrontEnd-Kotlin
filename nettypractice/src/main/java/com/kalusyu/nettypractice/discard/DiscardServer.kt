@@ -6,6 +6,8 @@ import io.netty.channel.ChannelOption
 import io.netty.channel.nio.NioEventLoopGroup
 import io.netty.channel.socket.SocketChannel
 import io.netty.channel.socket.nio.NioServerSocketChannel
+import io.netty.handler.codec.LengthFieldBasedFrameDecoder
+import io.netty.handler.codec.LengthFieldPrepender
 
 
 /**
@@ -31,6 +33,13 @@ class DiscardServer(val port: Int) {
                     @Throws(Exception::class)
                     override fun initChannel(ch: SocketChannel) {
                         ch.pipeline().addLast(DiscardServerHandler())
+                        ch.pipeline()?.let {
+                            it.addLast(
+                                "LengthFieldBasedFrameDecoder",
+                                LengthFieldBasedFrameDecoder(8192, 0, 4, 0, 4)
+                            )
+                            it.addLast("LengthFieldPrepender", LengthFieldPrepender(4))
+                        }
                     }
                 })
                 .option(ChannelOption.SO_BACKLOG, 128) // (5)
@@ -48,7 +57,6 @@ class DiscardServer(val port: Int) {
             bossGroup.shutdownGracefully()
         }
     }
-
 
 
 }

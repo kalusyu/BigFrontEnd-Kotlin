@@ -1,12 +1,13 @@
 package com.kalusyu.nettypractice.discard
 
+import android.os.Parcelable
+import com.alibaba.fastjson.JSON
 import io.netty.buffer.ByteBuf
 import io.netty.channel.ChannelHandlerContext
 import io.netty.channel.ChannelInboundHandlerAdapter
+import io.netty.channel.SimpleChannelInboundHandler
 import io.netty.util.ReferenceCountUtil
-
-
-
+import kotlinx.android.parcel.Parcelize
 
 
 /**
@@ -16,24 +17,24 @@ import io.netty.util.ReferenceCountUtil
  * @date 2020/8/4 9:36
  *
  **/
-class DiscardServerHandler :ChannelInboundHandlerAdapter() {
+class DiscardServerHandler : SimpleChannelInboundHandler<Object>() {
 
-    /**
-     * Please keep in mind that it is the handler's responsibility to release any reference-counted object passed to the handler
-     * 所有的引用计数都是由handler释放的
-     */
-    override fun channelRead(ctx: ChannelHandlerContext?, msg: Any?) {
-//        val `in` = msg as ByteBuf
-//        try {
-//            while (`in`.isReadable) { // (1)
-//                print(`in`.readByte().toChar())
-//                System.out.flush()
-//            }
-//        } finally {
-//            ReferenceCountUtil.release(msg) // (2)
-//        }
-        ctx?.write(msg)
-        ctx?.flush()
+    override fun channelActive(ctx: ChannelHandlerContext?) {
+
+    }
+
+    override fun channelRead0(ctx: ChannelHandlerContext?, msg: Object?) {
+        println("ybw server read ")
+        val response = Response("leftDistance", 1)
+        val res = JSON.toJSON(response)
+        while (true) {
+            Thread.sleep(500)
+            ctx?.run {
+                println("ybw $res")
+                writeAndFlush(res)
+            }
+        }
+
     }
 
     override fun exceptionCaught(ctx: ChannelHandlerContext?, cause: Throwable?) {
@@ -41,3 +42,6 @@ class DiscardServerHandler :ChannelInboundHandlerAdapter() {
         ctx?.close();
     }
 }
+
+@Parcelize
+data class Response(val name: String, val type: Int) : Parcelable
