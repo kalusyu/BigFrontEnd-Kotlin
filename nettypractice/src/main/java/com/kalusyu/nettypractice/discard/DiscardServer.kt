@@ -8,6 +8,8 @@ import io.netty.channel.socket.SocketChannel
 import io.netty.channel.socket.nio.NioServerSocketChannel
 import io.netty.handler.codec.LengthFieldBasedFrameDecoder
 import io.netty.handler.codec.LengthFieldPrepender
+import io.netty.handler.logging.LogLevel
+import io.netty.handler.logging.LoggingHandler
 
 
 /**
@@ -28,17 +30,19 @@ class DiscardServer(val port: Int) {
             val b = ServerBootstrap() // (2)
             b.group(bossGroup, workerGroup)
                 .channel(NioServerSocketChannel::class.java) // (3)
+                .option(ChannelOption.SO_BACKLOG, 100)
+                .handler(LoggingHandler(LogLevel.INFO))
                 .childHandler(object : ChannelInitializer<SocketChannel>() {
                     // (4)
                     @Throws(Exception::class)
                     override fun initChannel(ch: SocketChannel) {
-                        ch.pipeline().addLast(DiscardServerHandler())
                         ch.pipeline()?.let {
-                            it.addLast(
-                                "LengthFieldBasedFrameDecoder",
-                                LengthFieldBasedFrameDecoder(8192, 0, 4, 0, 4)
-                            )
-                            it.addLast("LengthFieldPrepender", LengthFieldPrepender(4))
+//                            it.addLast(
+//                                "LengthFieldBasedFrameDecoder",
+//                                LengthFieldBasedFrameDecoder(8192, 0, 4, 0, 4)
+//                            )
+//                            it.addLast("LengthFieldPrepender", LengthFieldPrepender(4))
+                            it.addLast(DiscardServerHandler())
                         }
                     }
                 })

@@ -2,11 +2,9 @@ package com.kalusyu.nettypractice.discard
 
 import android.os.Parcelable
 import com.alibaba.fastjson.JSON
-import io.netty.buffer.ByteBuf
 import io.netty.channel.ChannelHandlerContext
 import io.netty.channel.ChannelInboundHandlerAdapter
 import io.netty.channel.SimpleChannelInboundHandler
-import io.netty.util.ReferenceCountUtil
 import kotlinx.android.parcel.Parcelize
 
 
@@ -17,13 +15,16 @@ import kotlinx.android.parcel.Parcelize
  * @date 2020/8/4 9:36
  *
  **/
-class DiscardServerHandler : SimpleChannelInboundHandler<Object>() {
+class DiscardServerHandler : ChannelInboundHandlerAdapter() {
 
     override fun channelActive(ctx: ChannelHandlerContext?) {
-
+        println("connect server ${ctx?.read()}")
+        ctx?.run {
+            writeAndFlush("to client")
+        }
     }
 
-    override fun channelRead0(ctx: ChannelHandlerContext?, msg: Object?) {
+    override fun channelRead(ctx: ChannelHandlerContext?, msg: Any?) {
         println("ybw server read ")
         val response = Response("leftDistance", 1)
         val res = JSON.toJSON(response)
@@ -31,10 +32,9 @@ class DiscardServerHandler : SimpleChannelInboundHandler<Object>() {
             Thread.sleep(500)
             ctx?.run {
                 println("ybw $res")
-                writeAndFlush(res)
+                write(res.toString())
             }
         }
-
     }
 
     override fun exceptionCaught(ctx: ChannelHandlerContext?, cause: Throwable?) {
