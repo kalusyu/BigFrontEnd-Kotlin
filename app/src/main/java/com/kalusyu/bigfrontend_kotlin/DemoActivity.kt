@@ -13,7 +13,6 @@ import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import com.blankj.utilcode.util.TimeUtils
 import com.kalusyu.bigfrontend_kotlin.camerax.CameraActivity
-import io.tempo.Tempo
 import kotlinx.android.synthetic.main.demo_layout.*
 
 
@@ -37,7 +36,7 @@ class DemoActivity : AppCompatActivity() {
         }
 
         btn2.setOnClickListener {
-            val intent = Intent(this, YuvActivity::class.java)
+            val intent = Intent(this, MainActivity::class.java)
             startActivity(intent)
         }
 
@@ -72,9 +71,6 @@ class DemoActivity : AppCompatActivity() {
         }
         location?.let {
             Log.e("ybw", "ybw = ${TimeUtils.millis2String(it.time, " yyyy-MM-dd HH:mm:ss ")}")
-        }
-        Tempo.now()?.let {
-            Log.e("ybw", "ybw = ${TimeUtils.millis2String(it, " yyyy-MM-dd HH:mm:ss ")}")
         }
 
 

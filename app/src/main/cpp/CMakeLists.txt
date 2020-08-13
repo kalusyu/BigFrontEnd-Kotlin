@@ -13,12 +13,12 @@ cmake_minimum_required(VERSION 3.4.1)
 message("ybw ${CMAKE_SOURCE_DIR}")
 
 # c++引用 so
-add_library(
-        libmpp
-        SHARED
-        IMPORTED)
-set_target_properties(libmpp PROPERTIES IMPORTED_LOCATION
-        ${CMAKE_SOURCE_DIR}/../../../libs/${CMAKE_ANDROID_ARCH_ABI}/libmpp.so)
+#add_library(
+#        libmpp
+#        SHARED
+#        IMPORTED)
+#set_target_properties(libmpp PROPERTIES IMPORTED_LOCATION
+#        ${CMAKE_SOURCE_DIR}/../../../libs/${CMAKE_ANDROID_ARCH_ABI}/libmpp.so)
 
 #add_library(
 #        libshowYUV
@@ -55,7 +55,7 @@ find_library( # Sets the name of the path variable.
 
 target_link_libraries( # Specifies the target library.
         native-lib
-        libmpp
+#        libmpp
 
         # Links the target library to the log library
         # included in the NDK.

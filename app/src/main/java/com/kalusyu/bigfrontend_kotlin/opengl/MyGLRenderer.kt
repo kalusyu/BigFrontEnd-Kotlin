@@ -13,7 +13,7 @@ import javax.microedition.khronos.opengles.GL10
  * 创建时间   2019/3/26 17:17
  * 描述	      GLSurfaceView.Renderer 渲染类
  */
-class MyGLRenderer : GLSurfaceView.Renderer {
+class   MyGLRenderer : GLSurfaceView.Renderer {
     companion object {
         private const val TAG = "MyGLRenderer"
     }
@@ -181,7 +181,7 @@ class MyGLRenderer : GLSurfaceView.Renderer {
     /**
      * 预览YUV格式数据
      * @param yuvdata yuv格式的数据
-     * @param type YUV数据的格式 0 -> I420  1 -> NV12  2 -> NV21
+     * @param type YUV数据的格式 0 -> I420  1 -> NV12  2 -> NV21 3 -》 YUYV
      */
     fun feedData(yuvdata: ByteArray, type: Int = 0) {
         synchronized(this) {
@@ -194,7 +194,13 @@ class MyGLRenderer : GLSurfaceView.Renderer {
                     y.put(yuvdata, 0, mVideoWidth * mVideoHeight)
                     u.put(yuvdata, mVideoWidth * mVideoHeight, mVideoWidth * mVideoHeight / 4)
                     v.put(yuvdata, mVideoWidth * mVideoHeight * 5 / 4, mVideoWidth * mVideoHeight / 4)
-                } else {
+                } else if (type == 3){
+                    y.put(yuvdata, 0, mVideoWidth * mVideoHeight)
+                    u.put(yuvdata, mVideoWidth * mVideoHeight, mVideoWidth * mVideoHeight / 4)
+                    y.put(yuvdata, mVideoWidth * mVideoHeight * 5 / 4, mVideoWidth * mVideoHeight)
+                    v.put(yuvdata, mVideoWidth * mVideoHeight * 9 / 4, mVideoWidth * mVideoHeight / 4)
+                }
+                else {
                     y.clear()
                     uv.clear()
                     y.put(yuvdata, 0, mVideoWidth * mVideoHeight)

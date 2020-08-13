@@ -35,6 +35,7 @@
         android:id="@+id/openGlSurface"
         android:layout_width="match_parent"
         android:layout_height="0dp"
+        android:visibility="gone"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintTop_toBottomOf="@id/button" />
 
@@ -46,5 +47,13 @@
         android:visibility="gone"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintTop_toBottomOf="@id/surface" />
+
+    <ImageView
+        android:id="@+id/img_rgb"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/surface"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

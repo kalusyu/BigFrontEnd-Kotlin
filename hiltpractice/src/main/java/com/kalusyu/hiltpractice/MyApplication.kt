@@ -10,7 +10,6 @@ import dagger.hilt.android.HiltAndroidApp
  * @date 2020/8/11 9:40
  *
  **/
-@HiltAndroidApp
 class MyApplication:Application() {
 
     val appContainer = AppContainer()

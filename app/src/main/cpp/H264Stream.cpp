@@ -6,7 +6,7 @@
 #include <jni.h>
 #include <string>
 #include <stdio.h>
-#include "mpp_err.h"
+//#include "mpp_err.h"
 #include <android/log.h>
 #include "JniHelper.h"
 
@@ -56,9 +56,9 @@ protected:
 };
 
 NativeStream::NativeStream() {
-    int result = edde_mpp_init(get_dec_param);
-    __android_log_print(ANDROID_LOG_INFO, "ybw",
-                        "native result = %d", result);
+//    int result = edde_mpp_init(get_dec_param);
+//    __android_log_print(ANDROID_LOG_INFO, "ybw",
+//                        "native result = %d", result);
     // 文件
 //    unsigned char sps[]={0x00,0x00,0x00,0x01,0x67,0x64,0x00,0x1F,0xAC,0x1A,0xD0,0x14,0x07,0xB4,0x20,0x00,0x00,0x03,0x00,0x20,0x00,0x00,0x05,0x11,0xE2,0x85,0x54};
 //    unsigned char pps[]={0x00,0x00,0x00,0x01,0x68,0xEE,0x3C,0xB0};
@@ -75,10 +75,10 @@ NativeStream::NativeStream() {
 //    unsigned char pps[]={0x68,0xEE,0x3C,0xB0};
 
 
-    __android_log_print(ANDROID_LOG_INFO, "ybw",
-                        "native result = %d，sps=%d", result, sizeof(sps));
-    edde_decode_frame(sps, sizeof(sps));
-    edde_decode_frame(pps, sizeof(pps));
+//    __android_log_print(ANDROID_LOG_INFO, "ybw",
+//                        "native result = %d，sps=%d", result, sizeof(sps));
+//    edde_decode_frame(sps, sizeof(sps));
+//    edde_decode_frame(pps, sizeof(pps));
 }
 
 NativeStream::~NativeStream() {
@@ -86,20 +86,20 @@ NativeStream::~NativeStream() {
 }
 
 static void setH624Stream(JNIEnv *env, jobject thiz, jbyteArray byte) {
-    int length = (*env).GetArrayLength(byte);
-    __android_log_print(ANDROID_LOG_INFO, "ybw",
-                        "setH624Stream bytebuf = %d", length);
-
-    jboolean isCopy = JNI_TRUE;
-    jbyte *bBuffer = env->GetByteArrayElements(byte, &isCopy);
-    unsigned char *buff = (unsigned char *) bBuffer;
-
-    __android_log_print(ANDROID_LOG_INFO, "ybw",
-                        "setH624Stream convert %x,%x,%x,%x,%x,%x,%x,%x", bBuffer[0], bBuffer[1],
-                        bBuffer[2],
-                        bBuffer[3], bBuffer[4], bBuffer[5], bBuffer[6],
-                        bBuffer[7]);
-    edde_decode_frame(buff, length);
+//    int length = (*env).GetArrayLength(byte);
+//    __android_log_print(ANDROID_LOG_INFO, "ybw",
+//                        "setH624Stream bytebuf = %d", length);
+//
+//    jboolean isCopy = JNI_TRUE;
+//    jbyte *bBuffer = env->GetByteArrayElements(byte, &isCopy);
+//    unsigned char *buff = (unsigned char *) bBuffer;
+//
+//    __android_log_print(ANDROID_LOG_INFO, "ybw",
+//                        "setH624Stream convert %x,%x,%x,%x,%x,%x,%x,%x", bBuffer[0], bBuffer[1],
+//                        bBuffer[2],
+//                        bBuffer[3], bBuffer[4], bBuffer[5], bBuffer[6],
+//                        bBuffer[7]);
+//    edde_decode_frame(buff, length);
 
 }
 
