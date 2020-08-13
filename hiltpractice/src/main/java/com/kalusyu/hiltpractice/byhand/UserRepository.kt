@@ -1,4 +1,7 @@
-package com.kalusyu.hiltpractice
+package com.kalusyu.hiltpractice.byhand
+
+import com.kalusyu.hiltpractice.byhand.UserLocalDataSource
+import com.kalusyu.hiltpractice.byhand.UserRemoteDataSource
 
 /**
  * desc: 

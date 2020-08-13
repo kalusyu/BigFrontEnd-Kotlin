@@ -1,6 +1,7 @@
-package com.kalusyu.hiltpractice
+package com.kalusyu.hiltpractice.byhand
 
 import androidx.lifecycle.ViewModel
+import com.kalusyu.hiltpractice.byhand.UserRepository
 
 /**
  * desc:

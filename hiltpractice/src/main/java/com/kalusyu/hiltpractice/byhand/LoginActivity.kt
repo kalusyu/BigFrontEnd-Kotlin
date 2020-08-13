@@ -1,8 +1,8 @@
-package com.kalusyu.hiltpractice
+package com.kalusyu.hiltpractice.byhand
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
-import retrofit2.Retrofit
+import com.kalusyu.hiltpractice.MyApplication
 
 /**
  * desc:
@@ -13,7 +13,7 @@ import retrofit2.Retrofit
  **/
 class LoginActivity: AppCompatActivity() {
 
-    private lateinit var loginViewModel:LoginViewModel
+    private lateinit var loginViewModel: LoginViewModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -27,9 +27,9 @@ class LoginActivity: AppCompatActivity() {
 //        loginViewModel = LoginViewModel(userRepository)
 
         // 创建自己的容器依赖
-        val appContainer = (application as MyApplication).appContainer
-        // loginViewModel = LoginViewModel(appContainer.userRepository)
-        loginViewModel = appContainer.loginViewModel
+//        val appContainer = (application as MyApplication).appContainer
+//        // loginViewModel = LoginViewModel(appContainer.userRepository)
+//        loginViewModel = appContainer.loginViewModel
 
     }
 }
