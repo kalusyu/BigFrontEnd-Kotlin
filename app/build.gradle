@@ -119,6 +119,9 @@ dependencies {
     implementation 'com.wpf.yuvutils:libyuv-android:1.0.0'
 
 
+    // rtsp client
+    implementation "com.aaronhan:rtspclient:0.7"
+
 
 
 
