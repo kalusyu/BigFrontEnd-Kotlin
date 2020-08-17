@@ -51,6 +51,7 @@ class MediaCodecActivity : AppCompatActivity() {
 
             override fun surfaceCreated(holder: SurfaceHolder?) {
                 val selTrackFmt = chooseVideoTrack(extractor)
+                selTrackFmt?.setInteger(MediaFormat.KEY_FRAME_RATE, 15)
                 val codec = createCodec(selTrackFmt!!, media_codec_surface.holder.surface)
                 codec?.run {
                     setCallback(object : MediaCodec.Callback() {

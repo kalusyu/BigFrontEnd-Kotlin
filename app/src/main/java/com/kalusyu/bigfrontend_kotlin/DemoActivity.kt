@@ -13,6 +13,7 @@ import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import com.blankj.utilcode.util.TimeUtils
 import com.kalusyu.bigfrontend_kotlin.camerax.CameraActivity
+import com.kalusyu.bigfrontend_kotlin.mediacodec.MediaCodecActivity
 import kotlinx.android.synthetic.main.demo_layout.*
 
 
@@ -37,6 +38,10 @@ class DemoActivity : AppCompatActivity() {
 
         btn2.setOnClickListener {
             val intent = Intent(this, MainActivity::class.java)
+            startActivity(intent)
+        }
+        btn3.setOnClickListener {
+            val intent = Intent(this, MediaCodecActivity::class.java)
             startActivity(intent)
         }
 
