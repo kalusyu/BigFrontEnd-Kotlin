@@ -13,6 +13,7 @@ import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import com.blankj.utilcode.util.TimeUtils
 import com.kalusyu.bigfrontend_kotlin.camerax.CameraActivity
+import com.kalusyu.bigfrontend_kotlin.custominput.KeyboardActivity
 import com.kalusyu.bigfrontend_kotlin.h264decode.H264Activity
 import com.kalusyu.bigfrontend_kotlin.mediacodec.MediaCodecActivity
 import kotlinx.android.synthetic.main.demo_layout.*
@@ -48,6 +49,10 @@ class DemoActivity : AppCompatActivity() {
 
         btn4.setOnClickListener {
             val intent = Intent(this, H264Activity::class.java)
+            startActivity(intent)
+        }
+        btn5.setOnClickListener {
+            val intent = Intent(this, KeyboardActivity::class.java)
             startActivity(intent)
         }
 
