@@ -1,5 +1,7 @@
 package com.kalusyu.hiltpractice.hilt
 
+import javax.inject.Inject
+
 /**
  * desc:
  *
@@ -7,6 +9,6 @@ package com.kalusyu.hiltpractice.hilt
  * @date 2020/8/11 21:02
  *
  **/
-class AnalyticsService {
+class AnalyticsService @Inject constructor(){
 
 }

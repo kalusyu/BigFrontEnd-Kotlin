@@ -10,4 +10,8 @@ import javax.inject.Inject
  *
  **/
 class AnalyticsAdapter @Inject constructor(private  val service:AnalyticsService) {
+
+    fun saySomething(){
+        println("instance success")
+    }
 }
