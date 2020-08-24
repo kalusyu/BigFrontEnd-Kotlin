@@ -1,3 +1,8 @@
+import com.kalusyu.versionplugin.Retrofit
+
+plugins{
+    id "com.kalusyu.version.plugin"
+}
 apply plugin: 'com.android.application'
 apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-android-extensions'
@@ -67,7 +72,7 @@ dependencies {
     kapt compiler
 
     // https://mvnrepository.com/artifact/com.squareup.retrofit2/retrofit
-    implementation group: 'com.squareup.retrofit2', name: 'retrofit', version: '2.9.0'
+    implementation Retrofit.runtime
 
 
     def room_version = "2.2.5"
