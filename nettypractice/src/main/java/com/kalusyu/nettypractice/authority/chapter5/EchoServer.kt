@@ -8,6 +8,7 @@ import io.netty.channel.nio.NioEventLoopGroup
 import io.netty.channel.socket.SocketChannel
 import io.netty.channel.socket.nio.NioServerSocketChannel
 import io.netty.handler.codec.DelimiterBasedFrameDecoder
+import io.netty.handler.codec.FixedLengthFrameDecoder
 import io.netty.handler.codec.LineBasedFrameDecoder
 import io.netty.handler.codec.string.StringDecoder
 import kotlin.Exception
@@ -48,8 +49,9 @@ class EchoServer {
         @Throws(Exception::class)
         override fun initChannel(ch: SocketChannel?) {
             ch?.pipeline()?.run {
-                val byteBuf = Unpooled.copiedBuffer("\$_".toByteArray())
-                addLast(DelimiterBasedFrameDecoder(1024, byteBuf))
+//                val byteBuf = Unpooled.copiedBuffer("\$_".toByteArray())
+//                addLast(DelimiterBasedFrameDecoder(1024, byteBuf))
+                addLast(FixedLengthFrameDecoder(20))
                 addLast(StringDecoder())
                 addLast(EchoServerHandler())
             }

@@ -16,10 +16,12 @@ class EchoServerHandler : SimpleChannelInboundHandler<Any>() {
     var counter = 0
     override fun channelRead0(ctx: ChannelHandlerContext?, msg: Any?) {
 
-        var body = msg as String
-        println("This is :${++counter} times receive client: ${body}")
+//        var body = msg as String
+//        println("This is :${++counter} times receive client: ${body}")
+//
+//        body += "\$_"
+//        ctx?.writeAndFlush(Unpooled.copiedBuffer(body.toByteArray()))
 
-        body += "\$_"
-        ctx?.writeAndFlush(Unpooled.copiedBuffer(body.toByteArray()))
+        println("Receive client: [ ${msg as String} ]")
     }
 }
