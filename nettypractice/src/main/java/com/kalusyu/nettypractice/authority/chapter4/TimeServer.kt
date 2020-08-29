@@ -6,6 +6,8 @@ import io.netty.channel.ChannelOption
 import io.netty.channel.nio.NioEventLoopGroup
 import io.netty.channel.socket.SocketChannel
 import io.netty.channel.socket.nio.NioServerSocketChannel
+import io.netty.handler.codec.LineBasedFrameDecoder
+import io.netty.handler.codec.string.StringDecoder
 import kotlin.Exception
 
 /**
@@ -41,7 +43,11 @@ class TimeServer {
 
         @Throws(Exception::class)
         override fun initChannel(ch: SocketChannel?) {
-            ch?.pipeline()?.addLast(TimeServerHandler())
+            ch?.pipeline()?.run {
+                addLast(LineBasedFrameDecoder(1024))
+                addLast(StringDecoder())
+                addLast(TimeServerHandler())
+            }
         }
     }
 

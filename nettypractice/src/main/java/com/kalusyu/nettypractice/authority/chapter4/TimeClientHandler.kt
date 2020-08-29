@@ -38,10 +38,11 @@ class TimeClientHandler : SimpleChannelInboundHandler<Any>() {
 
     override fun channelRead0(ctx: ChannelHandlerContext?, msg: Any?) {
 
-        val buf = msg as ByteBuf
-        val req = ByteArray(buf.readableBytes())
-        buf.readBytes(req)
-        val body = String(req, Charset.defaultCharset())
+//        val buf = msg as ByteBuf
+//        val req = ByteArray(buf.readableBytes())
+//        buf.readBytes(req)
+//        val body = String(req, Charset.defaultCharset())
+        val body = msg as String
         println("client Now is: $body; the counter is ${++counter}")
 
     }
