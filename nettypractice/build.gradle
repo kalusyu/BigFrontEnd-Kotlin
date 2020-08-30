@@ -41,11 +41,15 @@ dependencies {
 
     // https://mvnrepository.com/artifact/io.netty/netty-all
     implementation group: 'io.netty', name: 'netty-all', version: '4.1.51.Final'
-    // https://mvnrepository.com/artifact/org.msgpack/msgpack-core
-    implementation group: 'org.msgpack', name: 'msgpack-core', version: '0.8.20'
+    // https://mvnrepository.com/artifact/org.msgpack/msgpack messagepack for java
+    implementation group: 'org.msgpack', name: 'msgpack', version: '0.6.12'
+
+
+    // messagepack for kotlin
+    implementation "com.daveanthonythomas.moshipack:moshipack:1.0.0-beta"
 
     // https://mvnrepository.com/artifact/com.alibaba/fastjson
-    compile group: 'com.alibaba', name: 'fastjson', version: '1.2.73'
+    implementation group: 'com.alibaba', name: 'fastjson', version: '1.2.73'
 
 
 
