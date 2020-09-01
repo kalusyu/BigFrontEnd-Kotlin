@@ -11,6 +11,8 @@ import io.netty.channel.socket.SocketChannel
 import io.netty.channel.socket.nio.NioSocketChannel
 import io.netty.handler.codec.LengthFieldBasedFrameDecoder
 import io.netty.handler.codec.LengthFieldPrepender
+import io.netty.handler.codec.string.StringDecoder
+import io.netty.handler.codec.string.StringEncoder
 
 
 /**
@@ -20,23 +22,24 @@ import io.netty.handler.codec.LengthFieldPrepender
  * @date 2020/8/4 16:36
  *
  **/
-class FrameClient : ChannelInboundHandlerAdapter() {
+class FrameClient : SimpleChannelInboundHandler<Any>() {
 
-    override fun channelActive(ctx: ChannelHandlerContext?) {
-        println("write 123")
-        ctx?.write(2134)
-    }
-
-    override fun exceptionCaught(ctx: ChannelHandlerContext?, cause: Throwable?) {
-        cause?.printStackTrace()
-        ctx?.close()
-    }
-
-    override fun channelRead(ctx: ChannelHandlerContext?, msg: Any?) {
+    override fun channelRead0(ctx: ChannelHandlerContext?, msg: Any?) {
         msg as ByteBuf
         val str = msg.readBytes(msg.readableBytes())
         println("ybw $str")
-        ctx?.writeAndFlush("googogogo=====")
+    }
+
+    override fun channelActive(ctx: ChannelHandlerContext?) {
+        println("write 123")
+        for (i in 0..9){
+            ctx?.write("{\"message\": {\"code\": \"0\",\"description\": \"success\"}}")
+        }
+        ctx?.flush()
+    }
+
+    override fun exceptionCaught(ctx: ChannelHandlerContext?, cause: Throwable?) {
+        ctx?.close()
     }
 }
 
@@ -48,21 +51,24 @@ fun main() {
             .handler(object : ChannelInitializer<SocketChannel>() {
                 override fun initChannel(ch: SocketChannel?) {
                     ch?.run {
-                        pipeline()?.let {
-//                            it.addLast(
-//                                "LengthFieldBasedFrameDecoder",
-//                                LengthFieldBasedFrameDecoder(8192, 0, 4, 0, 4)
-//                            )
-//                            it.addLast("LengthFieldPrepender", LengthFieldPrepender(4))
-                            it.addLast(FrameClient())
+                        pipeline()?.run {
+                            addLast(
+                                "LengthFieldBasedFrameDecoder",
+                                LengthFieldBasedFrameDecoder(8192, 0, 4, 0, 4)
+                            )
+                            addLast(StringDecoder())
+                            addLast("LengthFieldPrepender", LengthFieldPrepender(4))
+                            addLast(StringEncoder())
+                            addLast(FrameClient())
                         }
                     }
-                    ch?.write(10)
                 }
             })
-        val channelFuture = clientBootStrap.connect("127.0.0.1", 20000).sync()
-        channelFuture.channel().writeAndFlush("g000--------------")
-        //channelFuture.channel().closeFuture().sync()
+//        val ip = "192.168.1.120"
+        val ip = "127.0.0.1"
+        val channelFuture = clientBootStrap.connect(ip, 20001).sync()
+
+        channelFuture.channel().closeFuture().sync()
     } finally {
         group.shutdownGracefully().sync()
     }
