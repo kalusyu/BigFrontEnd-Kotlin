@@ -9,6 +9,7 @@
 //#include "mpp_err.h"
 #include <android/log.h>
 #include "JniHelper.h"
+#include "hmotorSignalNormalizer.h"
 
 
 jclass global_class = NULL;
@@ -62,8 +63,10 @@ NativeStream::NativeStream() {
     // 文件
 //    unsigned char sps[]={0x00,0x00,0x00,0x01,0x67,0x64,0x00,0x1F,0xAC,0x1A,0xD0,0x14,0x07,0xB4,0x20,0x00,0x00,0x03,0x00,0x20,0x00,0x00,0x05,0x11,0xE2,0x85,0x54};
 //    unsigned char pps[]={0x00,0x00,0x00,0x01,0x68,0xEE,0x3C,0xB0};
-    unsigned char sps[]={0x00,0x00,0x00,0x01,0x27,0x64,0x00,0x28,0xAC,0x1A,0xD0,0x14,0x07,0xB4,0x20,0x00,0x00,0x03,0x00,0x20,0x00,0x00,0x07,0x91,0xE2,0x85,0x54};
-    unsigned char pps[]={0x00,0x00,0x00,0x01,0x28,0xEE,0x3C,0xB0};
+    unsigned char sps[] = {0x00, 0x00, 0x00, 0x01, 0x27, 0x64, 0x00, 0x28, 0xAC, 0x1A, 0xD0, 0x14,
+                           0x07, 0xB4, 0x20, 0x00, 0x00, 0x03, 0x00, 0x20, 0x00, 0x00, 0x07, 0x91,
+                           0xE2, 0x85, 0x54};
+    unsigned char pps[] = {0x00, 0x00, 0x00, 0x01, 0x28, 0xEE, 0x3C, 0xB0};
 
 
     // rtsp流
@@ -107,11 +110,38 @@ static jlong nativeInit(JNIEnv *env, jclass clazz) {
     NativeStream *im = new NativeStream();
     return reinterpret_cast<jlong>(im);
 }
+static motorSignalNormalizer motor;
+
+static void startP(int max){
+    __android_log_print(ANDROID_LOG_INFO, "startP", "max %d",max);
+    motor.start(max);
+}
+
+static jlong updateP(float distance){
+//    printf("distance %f",distance);
+    __android_log_print(ANDROID_LOG_INFO, "update", "distance %f",distance);
+    return motor.update(distance);
+}
+
+extern "C" JNIEXPORT void JNICALL Java_com_kalusyu_bigfrontend_JniTest_start(JNIEnv *env, jobject cls,jint max){
+    __android_log_print(ANDROID_LOG_INFO, "startP", "max %d",max);
+    motor.start(max);
+}
+
+extern "C" JNIEXPORT jfloat JNICALL Java_com_kalusyu_bigfrontend_JniTest_update(JNIEnv *env, jobject cls,jfloat distance){
+    __android_log_print(ANDROID_LOG_INFO, "update", "distance %f",distance);
+    return motor.update(distance);
+}
 
 
 static const JNINativeMethod gMethods[] = {
         {"setH624Stream", "([B)V", (void *) setH624Stream},
         {"nativeInit",    "()J",   (void *) nativeInit}
+};
+
+static const JNINativeMethod gMethodsTest[] = {
+        {"start", "(I)V", (void *) startP},
+        {"update",    "(F)F",   (void *) updateP}
 };
 
 
@@ -123,16 +153,27 @@ JNIEXPORT jint JNI_OnLoad(JavaVM *vm, void *reserved) {
     if (vm->GetEnv((void **) &env, JNI_VERSION_1_4) != JNI_OK) //从JavaVM获取JNIEnv，一般使用1.4的版本
         return -1;
     jclass clazz = env->FindClass(
-            "com/kalusyu/bigfrontend_kotlin/rtspclient/internal/video/H264Stream");
+            "com/kalusyu/bigfrontend/rtspclient/internal/video/H264Stream");
     if (!clazz) {
         __android_log_print(ANDROID_LOG_INFO, "native",
-                            "cannot get class: com/kalusyu/bigfrontend_kotlin/rtspclient/internal/video/H264Stream");
+                            "cannot get class: com/kalusyu/bigfrontend/rtspclient/internal/video/H264Stream");
         return -1;
     }
     if (env->RegisterNatives(clazz, gMethods, sizeof(gMethods) / sizeof(gMethods[0]))) {
         __android_log_print(ANDROID_LOG_INFO, "native", "register native method failed!\n");
         return -1;
     }
+
+    /*jclass jnitest = env->FindClass("com/kalusyu/bigfrontend_kotlin/JniTest");
+    if (!jnitest) {
+        __android_log_print(ANDROID_LOG_INFO, "init","cannot get class:com/kalusyu/bigfrontend_kotlin/JniTest");
+        return -1;
+    }
+    if (env->RegisterNatives(jnitest, gMethodsTest,
+                             sizeof(gMethodsTest) / sizeof(gMethodsTest[0]))) {
+        __android_log_print(ANDROID_LOG_INFO, "init", "register failed");
+        return -1;
+    }*/
 
     global_class = (jclass) env->NewGlobalRef(clazz);
     get_dec_param_android = (env)->GetMethodID(global_class, "get_dec_param", "([BIII)V");

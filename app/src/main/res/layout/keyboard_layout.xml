@@ -24,7 +24,7 @@
         tools:ignore="RtlHardcoded">
 
         <!--自定义，随便改-->
-        <com.kalusyu.bigfrontend_kotlin.custominput.CarKeyboardView
+        <com.kalusyu.bigfrontend.custominput.CarKeyboardView
             android:id="@+id/ky_keyboard"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

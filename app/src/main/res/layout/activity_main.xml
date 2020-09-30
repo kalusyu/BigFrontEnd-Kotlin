@@ -31,7 +31,7 @@
         app:layout_constraintBottom_toTopOf="@id/videoView"
         app:layout_constraintTop_toBottomOf="@id/button" />
 
-    <com.kalusyu.bigfrontend_kotlin.opengl.MyGLSurfaceView
+    <com.kalusyu.bigfrontend.opengl.MyGLSurfaceView
         android:id="@+id/openGlSurface"
         android:layout_width="match_parent"
         android:layout_height="0dp"
