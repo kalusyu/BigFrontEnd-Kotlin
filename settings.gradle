@@ -1,3 +1,5 @@
+include ':usbcomm'
+include ':SerialPortLibrary'
 include ':serialcomm'
 include ':activitylifecycle'
 include ':appstartup'

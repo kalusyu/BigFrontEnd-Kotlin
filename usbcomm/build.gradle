@@ -7,7 +7,7 @@ android {
     buildToolsVersion "30.0.0"
 
     defaultConfig {
-        applicationId "com.kalus.serialcomm"
+        applicationId "com.kalus.usb"
         minSdkVersion 23
         targetSdkVersion 29
         versionCode 1
@@ -22,33 +22,6 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
     }
-
-    lintOptions {
-        checkReleaseBuilds false
-        // Or, if you prefer, you can continue to check for errors in release builds,
-        // but continue the build even when errors are found:
-        abortOnError false
-    }
-
-
-    signingConfigs {
-
-        release {
-            try {
-                storeFile file("F:\\signapk.jar\\android7.1\\source.keystore")
-//                storeFile file("F:\\signapk.jar\\3368aidi\\source.keystore")
-                storePassword "123456"
-                keyAlias "feiyakey"
-                keyPassword "123456"
-                v1SigningEnabled true
-                v2SigningEnabled true
-            }
-            catch (ignored) {
-                throw new InvalidUserDataException("秘钥用户名或密码错误")
-            }
-        }
-    }
-
 }
 
 dependencies {
@@ -61,6 +34,4 @@ dependencies {
     androidTestImplementation 'androidx.test.ext:junit:1.1.2'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.3.0'
 
-    //implementation 'com.github.kongqw:AndroidSerialPort:1.0.1'
-    implementation project(":SerialPortLibrary")
 }
