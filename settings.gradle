@@ -1,3 +1,5 @@
+include ':serialcomm'
+include ':activitylifecycle'
 include ':appstartup'
 include ':nettypractice'
 include ':hiltpractice'
