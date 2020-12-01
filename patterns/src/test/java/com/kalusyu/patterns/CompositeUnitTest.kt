@@ -3,6 +3,7 @@ package com.kalusyu.patterns
 import com.kalusyu.patterns.struct.CircleView
 import com.kalusyu.patterns.struct.Composite
 import com.kalusyu.patterns.struct.Rectangle
+import com.kalusyu.patterns.struct.composite.*
 import org.junit.jupiter.api.Test
 
 /**
@@ -22,5 +23,21 @@ class CompositeUnitTest {
         composite.addView(circleView)
         composite.addView(rectangle)
         composite.draw()
+    }
+
+    @Test
+    fun testActionTrain(){
+        val keepCount = KeepCountTrain()
+        val keepTime = KeepTimeTrain()
+        val keepCountTime = KeepCountTimeTrain()
+
+        val deviceTrain = DeviceTrain()
+        deviceTrain.addAction(keepCount)
+
+        deviceTrain.doActionTrain()
+
+        val freeTrain = FreeTrain()
+        freeTrain.addAction(keepTime)
+        freeTrain.doActionTrain()
     }
 }
