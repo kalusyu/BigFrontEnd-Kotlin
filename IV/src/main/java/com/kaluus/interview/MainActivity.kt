@@ -7,6 +7,8 @@ import android.os.Bundle
 import android.widget.Toast
 import com.chad.library.adapter.base.BaseQuickAdapter
 import com.chad.library.adapter.base.viewholder.BaseViewHolder
+import com.kaluus.interview.fragment.DemoFragmentActivity
+import com.kaluus.interview.fragment.MainFragmentActivity
 import kotlinx.android.synthetic.main.activity_main.*
 
 class MainActivity : AppCompatActivity() {
@@ -15,7 +17,7 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        val list = mutableListOf("权限管理", "Fragment使用大全")
+        val list = mutableListOf("权限管理", "Fragment使用大全", "DemoFragment")
         val adapter =
             object : BaseQuickAdapter<String, BaseViewHolder>(R.layout.layout_simple, list) {
                 override fun convert(holder: BaseViewHolder, item: String) {
@@ -27,6 +29,12 @@ class MainActivity : AppCompatActivity() {
             when (position) {
                 0 -> {
                     startActivity(Intent(this, PermissionActivity::class.java))
+                }
+                1 -> {
+                    startActivity(Intent(this, MainFragmentActivity::class.java))
+                }
+                2 -> {
+                    startActivity(Intent(this, DemoFragmentActivity::class.java))
                 }
                 else -> {
 
