@@ -6,7 +6,7 @@
 
     <fragment
         android:id="@+id/titles"
-        class="com.kaluus.interview.fragment.TitlesFragment"
+        class="com.kaluus.iv.fragment.TitlesFragment"
         android:layout_width="0px"
         android:layout_height="match_parent"
         android:layout_weight="1" />

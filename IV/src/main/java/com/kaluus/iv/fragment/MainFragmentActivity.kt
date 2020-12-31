@@ -1,10 +1,10 @@
-package com.kaluus.interview.fragment
+package com.kaluus.iv.fragment
 
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
 import androidx.appcompat.app.AppCompatActivity
-import com.kaluus.interview.R
+import com.kaluus.iv.R
 
 /**
  * desc:

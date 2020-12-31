@@ -1,4 +1,4 @@
-package com.kaluus.interview.fragment
+package com.kaluus.iv.fragment
 
 import android.content.res.Configuration
 import android.os.Bundle

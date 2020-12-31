@@ -1,4 +1,4 @@
-package com.kaluus.interview
+package com.kaluus.iv
 
 import org.junit.Test
 

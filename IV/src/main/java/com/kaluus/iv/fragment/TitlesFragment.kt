@@ -1,4 +1,4 @@
-package com.kaluus.interview.fragment
+package com.kaluus.iv.fragment
 
 import android.content.Intent
 import android.os.Bundle
@@ -7,7 +7,7 @@ import android.widget.ArrayAdapter
 import android.widget.ListView
 import androidx.fragment.app.FragmentTransaction
 import androidx.fragment.app.ListFragment
-import com.kaluus.interview.R
+import com.kaluus.iv.R
 
 /**
  * desc:

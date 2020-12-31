@@ -1,4 +1,4 @@
-package com.kaluus.interview.fragment
+package com.kaluus.iv.fragment
 
 import android.os.Bundle
 import android.util.TypedValue

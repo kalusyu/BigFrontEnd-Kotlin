@@ -1,4 +1,4 @@
-package com.kaluus.interview.fragment
+package com.kaluus.iv.fragment
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -6,8 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import androidx.fragment.app.Fragment
-import com.kaluus.interview.R
-import kotlinx.android.synthetic.main.layout_simple.*
+import com.kaluus.iv.R
 
 /**
  * desc:
@@ -27,5 +26,9 @@ class StandardFragment : Fragment() {
         val view =  View.inflate(requireContext(), R.layout.layout_simple, null)
         view.findViewById<TextView>(R.id.tvDemo).text= "StandardFragment"
         return view
+    }
+
+    override fun onSaveInstanceState(outState: Bundle) {
+        super.onSaveInstanceState(outState)
     }
 }
