@@ -21,7 +21,7 @@ import com.kaluus.iv.databinding.SavedStateBinding
  * @date 2020/12/31 14:41
  *
  **/
-class SaveStateFragment : Fragment() {
+class SaveStateFragment(val idx:Int) : Fragment() {
 
 
     private val viewModel :SaveStateViewModel by activityViewModels()
@@ -33,6 +33,10 @@ class SaveStateFragment : Fragment() {
         SaveStateViewModel::class.java
     )*/
 
+    override fun onHiddenChanged(hidden: Boolean) {
+        super.onHiddenChanged(hidden)
+        println("====onHiddenChanged $hidden")
+    }
 
     //Activity使用 DataBindingUtil.setContentView(this, R.layout.test_activity);
     // fragmetn使用 DataBindingUtil.inflate(inflater, R.layout.test_fragment_idcard,container,false);
@@ -62,7 +66,7 @@ class SaveStateFragment : Fragment() {
         super.onCreate(savedInstanceState)
         println("====onCreate")
         // 节省资源，不用创建Fragment实例
-        retainInstance = true
+//        retainInstance = true
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {

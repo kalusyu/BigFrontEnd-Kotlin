@@ -34,11 +34,18 @@ class ViewModelActivity : AppCompatActivity() {
 
     }
 
+    override fun onResume() {
+        super.onResume()
+        val fragment = supportFragmentManager.findFragmentByTag(STATE_FRAGMENT)
+        supportFragmentManager.beginTransaction().hide(fragment!!)
+            .commitAllowingStateLoss()
+    }
+
     private fun handleAddFragment() {
         val fragmentManager = supportFragmentManager
         val transaction = fragmentManager.beginTransaction()
         // 旋转屏幕出现数据重影问题
-        val fragment = SaveStateFragment()
+        val fragment = SaveStateFragment(23)
         transaction.add(R.id.fragment_container, fragment, STATE_FRAGMENT)
         transaction.commit()
     }
