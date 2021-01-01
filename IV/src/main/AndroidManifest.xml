@@ -25,6 +25,7 @@
         <activity android:name="com.kaluus.iv.fragment.MainFragmentActivity"/>
         <activity android:name="com.kaluus.iv.fragment.DemoFragmentActivity"/>
         <activity android:name="com.kaluus.iv.fragment.viewmodel.ViewModelActivity"/>
+        <activity android:name="com.kaluus.iv.fragment.newapi.NewApiActivity"/>
     </application>
 
 </manifest>

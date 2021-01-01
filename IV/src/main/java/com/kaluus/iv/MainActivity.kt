@@ -11,11 +11,12 @@ import com.chad.library.adapter.base.BaseQuickAdapter
 import com.chad.library.adapter.base.viewholder.BaseViewHolder
 import com.kaluus.iv.fragment.DemoFragmentActivity
 import com.kaluus.iv.fragment.MainFragmentActivity
+import com.kaluus.iv.fragment.newapi.NewApiActivity
 import com.kaluus.iv.fragment.viewmodel.ViewModelActivity
 import kotlinx.android.synthetic.main.activity_main.*
 
 class MainActivity : AppCompatActivity() {
-    companion object{
+    companion object {
         const val TAG = "MainActivity"
     }
 
@@ -24,7 +25,13 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
         Log.e(TAG, "onCreate")
 
-        val list = mutableListOf("权限管理", "Fragment使用大全", "DemoFragment","ViewModelFragment")
+        val list = mutableListOf(
+            "权限管理",
+            "Fragment使用大全",
+            "DemoFragment",
+            "ViewModelFragment",
+            "Fragment New API"
+        )
         val adapter =
             object : BaseQuickAdapter<String, BaseViewHolder>(R.layout.layout_simple, list) {
                 override fun convert(holder: BaseViewHolder, item: String) {
@@ -45,6 +52,9 @@ class MainActivity : AppCompatActivity() {
                 }
                 3 -> {
                     startActivity(Intent(this, ViewModelActivity::class.java))
+                }
+                4 -> {
+                    startActivity(Intent(this, NewApiActivity::class.java))
                 }
                 else -> {
 
