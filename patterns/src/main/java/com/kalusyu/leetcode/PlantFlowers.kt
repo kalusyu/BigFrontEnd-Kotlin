@@ -415,8 +415,7 @@ class PlantFlowers {
     最后，最多只会剩下一块石头。返回此石头的重量。如果没有石头剩下，就返回 0。
      */
     fun lastStoneWeight(stones: IntArray): Int {
-        // o1 - o2 降序
-        // o2 - o1 升序
+        // o1 - o2 降序 -1 升序，1 降序
         val comparator: Comparator<Int> = Comparator { o1, o2 ->
             o2 - o1
         }
@@ -432,7 +431,30 @@ class PlantFlowers {
                 pq.offer(a - b)
             }
         }
-        return if(pq.isEmpty()) 0 else pq.poll()
+        return if (pq.isEmpty()) 0 else pq.poll()
+    }
+
+    /**
+     * 在一个「平衡字符串」中，'L' 和 'R' 字符的数量是相同的。
+    给出一个平衡字符串 s，请你将它分割成尽可能多的平衡字符串。
+    返回可以通过分割得到的平衡字符串的最大数量。
+     */
+    fun balancedStringSplit(s: String): Int {
+        val sChar = s.toCharArray()
+        var num = 0
+        var result = 0
+        sChar.forEach {
+            if (it == 'R'){
+                num++
+            } else {
+                num--
+            }
+            if (num == 0) {
+                result++
+            }
+        }
+        return result
+
     }
 
 
@@ -468,5 +490,7 @@ fun main() {
     plantFlowers.sortArrayByParityII(arrayOf(4, 2, 5, 7).toIntArray())
 
     plantFlowers.isSubsequence("aaaaaa", "bbaaaa")
+
+    println("balance ${plantFlowers.balancedStringSplit("LLRLRR")}")
 }
 
