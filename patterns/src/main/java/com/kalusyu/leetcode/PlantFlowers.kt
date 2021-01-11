@@ -457,6 +457,21 @@ class PlantFlowers {
 
     }
 
+    /**
+     * 给定一个包含红色、白色和蓝色，一共 n 个元素的数组，原地对它们进行排序，使得相同颜色的元素相邻，并按照红色、白色、蓝色顺序排列。
+    此题中，我们使用整数 0、 1 和 2 分别表示红色、白色和蓝色。
+     */
+    fun sortColors(nums: IntArray): Unit {
+        val map = HashMap<Int, Int>()
+        nums.forEach {
+            map[it] = map.getOrDefault(it, 0) + 1
+        }
+        map.forEach { (t, u) ->
+            for (i in u downTo 1){
+                print("$t,")
+            }
+        }
+    }
 
 }
 
@@ -492,5 +507,7 @@ fun main() {
     plantFlowers.isSubsequence("aaaaaa", "bbaaaa")
 
     println("balance ${plantFlowers.balancedStringSplit("LLRLRR")}")
+
+    plantFlowers.sortColors(intArrayOf(0,1,2,2,2,1,1,1,1,0,2,2,2,0))
 }
 
